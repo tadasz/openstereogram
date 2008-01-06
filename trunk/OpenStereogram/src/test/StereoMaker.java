@@ -230,8 +230,8 @@ public class StereoMaker extends Applet implements Runnable {
 		}
 
 		// This is the max Applet viewing size.
-		maxWidth = canvas.size().width;
-		maxHeight = canvas.size().height;
+		maxWidth = canvas.getSize().width;
+		maxHeight = canvas.getSize().height;
 		midWidth = maxWidth / 2;
 		midHeight = maxHeight / 2;
 
@@ -260,7 +260,8 @@ public class StereoMaker extends Applet implements Runnable {
 				makeStereoRds();
 			newImage(me);
 		} finally {
-			showStatus("Stereogram generation stopped");
+			// TODO remover
+			showStatus("Stereogram generation stopped" + getCodeBase() );
 		}
 
 	}
@@ -292,7 +293,6 @@ public class StereoMaker extends Applet implements Runnable {
 	 */
 	public synchronized void makeDepthImage() {
 		char defMask[] = { 'C', 'L', 'A', 'R', 'K' };
-		char blank = ' ';
 		char Mask[] = new char[5];
 
 		int numChar = input.length();
@@ -409,7 +409,6 @@ public class StereoMaker extends Applet implements Runnable {
 		// Now remove the alpha values and keep only the blue pixel values for 
 		// use as the depth values.
 		index = 0;
-		int totPrints = 0;
 		int blue, rgb;
 		for (int y = 0; y < imageHeight; y++) {
 			for (int x = 0; x < imageWidth; x++) {
@@ -488,8 +487,6 @@ public class StereoMaker extends Applet implements Runnable {
 		if (rdsColors[2] == null)
 			numColors = 2;
 
-		int yold = -1;
-		int oldsep = -1;
 		int stepDone = imageHeight / 10;
 		int percent;
 		depthIndex = 0;
@@ -566,7 +563,6 @@ public class StereoMaker extends Applet implements Runnable {
 	 * for resizing the java window.
 	 */
 	synchronized void getBackplaneImage() {
-    int width=0,height=0;
     backplaneLoaded=false;
     /* First load the backplane image */
     showStatus("Fetching backplane image:"+backplaneImageName); 
@@ -661,7 +657,6 @@ public class StereoMaker extends Applet implements Runnable {
     int lookR[]= new int[vWidth];// Look ahead for links to hidden points
     boolean vis;
 
-    int numColors=3;
     loControls.getSettings();
     int color[]=new int[vWidth]; 
     int colorPacked;
@@ -690,10 +685,6 @@ public class StereoMaker extends Applet implements Runnable {
     }
 
     int x,y, xv,yv, left,right;
-    int rnd;
-
-    int yold=-1;
-    int oldsep=-1;
     int stepDone=imageHeight/10;
     int percent;
 
@@ -806,7 +797,6 @@ public class StereoMaker extends Applet implements Runnable {
       // Now average the colors to reduce from virtual screen down to
       // the actual image size.
       int red, green, blue, rgb;
-      int colorpacked=0;
       int alpha=255;
       for(x=0; x<vWidth; x+=oversample){
         red=0; green=0; blue=0;
@@ -853,8 +843,8 @@ class StereoCanvas extends Canvas {
 
 	/*::::::::::::::::::::::::::::::: paint() ::::::::::::::::::::::::::::::::::*/
 	public synchronized void paint(Graphics g) {
-		int w = size().width;
-		int h = size().height;
+		int w = getSize().width;
+		int h = getSize().height;
 
 		// First Draw frame around image
 
