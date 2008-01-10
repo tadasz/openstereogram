@@ -260,8 +260,7 @@ public class StereoMaker extends Applet implements Runnable {
 				makeStereoRds();
 			newImage(me);
 		} finally {
-			// TODO remover
-			showStatus("Stereogram generation stopped" + getCodeBase() );
+			showStatus("Stereogram generation stopped");
 		}
 
 	}
