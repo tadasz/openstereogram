@@ -14,6 +14,7 @@ public class OpenStereogram {
 	 */
 	public static void main(String[] args) {
 		SimpleStereogram ss = new SimpleStereogram();
-		ss.generateSIRD();
+		//ss.generateSIRD();
+		ss.generateTexturedSIRD();
 	}
 }
