@@ -24,13 +24,15 @@ public class StereogramGenerator {
 		}
 		
 		BufferedImage stereogram = new BufferedImage(width, heigh, BufferedImage.TYPE_INT_RGB);
-		int[][] links = new int[heigh][width];
+		int[] linksL = new int[width];
+		int[] linksR = new int[width];
 		int observationDistance = (int)(observationDistanceInches * ppi);
 		int eyeSeparation = (int)(eyeSeparationInches * ppi);
 				
 		for ( int l = 0; l < heigh; l++ ) {
 			for ( int c = 0; c < width; c++ ) {
-				links[l][c] = c; 
+				linksL[c] = c;
+				linksR[c] = c;
 			}
 			
 			for ( int c = 0; c < width; c++ ) {
@@ -40,16 +42,40 @@ public class StereogramGenerator {
 				int right = left + separation;
 				
 				if ( left >= 0 && right < width ) {
-					links[l][right] = left;
+					boolean visible = true;
+					
+					if ( linksL[right] != right) {
+						if ( linksL[right] < left) {
+							linksR[linksL[right]] = linksL[right];
+							linksL[right] = right;
+						}
+						else {
+							visible = false;
+						}
+					}
+					if ( linksR[left] != left) {
+						if ( linksR[left] > right) {
+							linksL[linksR[left]] = linksR[left];
+							linksR[left] = left;
+						}
+						else {
+							visible = false;
+						}
+					}
+					
+					if ( visible ) {
+						linksL[right] = left;
+						linksR[left] = right;
+					}					
 				}
 			}
 			
 			for ( int c = 0; c < width; c++ ) {
-				if ( links[l][c] == c ) {
+				if ( linksL[c] == c ) {
 					stereogram.setRGB( c, l, colors.getRandomColor() );
 				}
 				else {
-					stereogram.setRGB( c, l, stereogram.getRGB(links[l][c], l) );
+					stereogram.setRGB( c, l, stereogram.getRGB(linksL[c], l) );
 				}
 			}
 		}
@@ -63,8 +89,7 @@ public class StereogramGenerator {
 		
 		// TODO preprocess depth map to discover min and max
 		// depth, making de object more centered
-		int depth = 255 - (new Color( rgb )).getRed(); 
-		return depth + ((observationDistance - 255) / 2);
-
+		int depth = 255 - (new Color( rgb )).getRed();
+		return depth + ((observationDistance - 256) / 2);
 	}
 }
