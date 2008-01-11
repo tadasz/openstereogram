@@ -48,7 +48,7 @@ public class StereoMaker extends Applet implements Runnable {
 	 */
 	private static final long serialVersionUID = 4899250516038195406L;
 
-	static boolean debug = false;
+	static boolean debug = true;
 
 	int stereoType = TYPE_RDS;
 
