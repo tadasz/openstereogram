@@ -9,12 +9,14 @@ import javax.swing.ImageIcon;
 public class SimpleStereogram {
 
 	public void generateSIRD() {
-		BufferedImage depthMap = getImage("./images/depthMaps/Boxes2.jpg");
+		BufferedImage depthMap = getImage("./images/depthMaps/Gitara.jpg");
 		final Image stereogram = StereogramGenerator.generateSIRD(
 				depthMap,
 				Color.BLACK, Color.WHITE, Color.RED, 0.5f,
 				640, 480,
-				14f, 2.5f, 72);
+				14f, 2.5f,
+				12f, 0f,				
+				72);
 
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
