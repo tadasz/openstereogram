@@ -3,8 +3,10 @@ package br.gfca.openstereogram;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 public class SimpleStereogram {
 
@@ -27,12 +29,14 @@ public class SimpleStereogram {
 	
 	public void generateTexturedSIRD() {
 		BufferedImage depthMap = getImage("./images/depthMaps/Struna.jpg");
-		BufferedImage texturePattern = getImage("./images/texturePatterns/RAND7.jpg");
+		BufferedImage texturePattern = getImage("./images/texturePatterns/RAND4.jpg");
 		
 		final Image stereogram = StereogramGenerator.generateTexturedSIRD(
 				depthMap, texturePattern,
 				640, 480,
-				14f, 2.5f, 72);
+				14f, 2.5f,
+				12f, 0f,
+				72, 72);
 
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -41,13 +45,15 @@ public class SimpleStereogram {
 		});
 	}
 
-	/**
-	 * @return
-	 */
 	private BufferedImage getImage(String file) {
-		ImageIcon i = new ImageIcon(file);
-		BufferedImage bf = new BufferedImage(i.getIconWidth(), i.getIconHeight(), BufferedImage.TYPE_INT_RGB);
-		bf.getGraphics().drawImage(i.getImage(), 0, 0, null);
+		BufferedImage bf = null;
+		try {
+			bf = ImageIO.read( new File(file) );
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return bf;
 	}
 }
