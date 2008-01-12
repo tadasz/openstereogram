@@ -1,4 +1,4 @@
-package br.gfca.openstereogram;
+package br.gfca.openstereogram.stereo;
 
 import java.util.Random;
 

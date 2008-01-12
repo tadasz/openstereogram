@@ -2,8 +2,6 @@ TO-DO:
 -scale depth maps that are bigger than intended stereogram
   - scale smaller too
 -3D is not smooth. Has discrete plans
--Resize window according to stereogram size
 -make GUI :|
--export stereogram to PNG
 -test private static mathematical functions
 -javadocs in stereogram generation code (not in gui)

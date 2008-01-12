@@ -1,7 +1,8 @@
 package br.gfca.openstereogram;
 
+import br.gfca.openstereogram.gui.StereogramWindow;
+import br.gfca.openstereogram.stereo.StereogramGenerator;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +12,8 @@ import javax.imageio.ImageIO;
 public class SimpleStereogram {
 
 	public void generateSIRD() {
-		BufferedImage depthMap = getImage("./images/depthMaps/Gitara.jpg");
-		final Image stereogram = StereogramGenerator.generateSIRD(
+		BufferedImage depthMap = getImage("./images/depthMaps/Struna.jpg");
+		final BufferedImage stereogram = StereogramGenerator.generateSIRD(
 				depthMap,
 				Color.BLACK, Color.WHITE, Color.RED, 0.5f,
 				640, 480,
@@ -29,9 +30,9 @@ public class SimpleStereogram {
 	
 	public void generateTexturedSIRD() {
 		BufferedImage depthMap = getImage("./images/depthMaps/Struna.jpg");
-		BufferedImage texturePattern = getImage("./images/texturePatterns/RAND4.jpg");
+		BufferedImage texturePattern = getImage("./images/texturePatterns/RAND7.jpg");
 		
-		final Image stereogram = StereogramGenerator.generateTexturedSIRD(
+		final BufferedImage stereogram = StereogramGenerator.generateTexturedSIRD(
 				depthMap, texturePattern,
 				640, 480,
 				14f, 2.5f,
