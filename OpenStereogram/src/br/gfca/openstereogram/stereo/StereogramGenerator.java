@@ -1,12 +1,11 @@
-package br.gfca.openstereogram;
+package br.gfca.openstereogram.stereo;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 public class StereogramGenerator {
 
-	public static Image generateSIRD( BufferedImage depthMap,
+	public static BufferedImage generateSIRD( BufferedImage depthMap,
 			Color color1, Color color2, Color color3, float color1Intensity,
 			int width, int heigh,
 			float observationDistanceInches, float eyeSeparationInches,
@@ -121,7 +120,7 @@ public class StereogramGenerator {
 		}		
 	}
 	
-	public static Image generateTexturedSIRD( BufferedImage depthMap, BufferedImage texturePattern,
+	public static BufferedImage generateTexturedSIRD( BufferedImage depthMap, BufferedImage texturePattern,
 			int width, int heigh,
 			float observationDistanceInches, float eyeSeparationInches,
 			float maxDepthInches, float minDepthInches,
