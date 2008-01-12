@@ -46,7 +46,7 @@ public class StereogramWindow extends javax.swing.JFrame {
         imageMenu = new javax.swing.JMenu();
         saveToFileMenuItem = new javax.swing.JMenuItem();
 
-        saveToFileFileChooser.setCurrentDirectory(new File("./images/"));
+        saveToFileFileChooser.setCurrentDirectory(new File("./images/myStereograms/"));
         saveToFileFileChooser.setDialogTitle("Save stereogram");
         saveToFileFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
 
