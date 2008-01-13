@@ -6,12 +6,14 @@
 
 package br.gfca.openstereogram.gui;
 
+import br.gfca.openstereogram.stereo.StereogramGenerator;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -21,10 +23,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MainGUI extends javax.swing.JFrame {
     
+    private StereogramWindow stereogramWindow;
+    
     /** Creates new form MainGUI */
     public MainGUI() {
 	initComponents();
 	this.setLocationRelativeTo( null );
+	this.stereogramWindow = null;
     }
     
     /** This method is called from within the constructor to
@@ -360,7 +365,11 @@ public class MainGUI extends javax.swing.JFrame {
         );
 
         generateButton.setText("Generate");
-        generateButton.setEnabled(false);
+        generateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout guidePanelLayout = new javax.swing.GroupLayout(guidePanel);
         guidePanel.setLayout(guidePanelLayout);
@@ -398,7 +407,7 @@ public class MainGUI extends javax.swing.JFrame {
         );
         color1PanelLayout.setVerticalGroup(
             color1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 71, Short.MAX_VALUE)
+            .addGap(0, 96, Short.MAX_VALUE)
         );
 
         color2Label.setText("Color 2:");
@@ -421,7 +430,7 @@ public class MainGUI extends javax.swing.JFrame {
         );
         color2PanelLayout.setVerticalGroup(
             color2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 71, Short.MAX_VALUE)
+            .addGap(0, 96, Short.MAX_VALUE)
         );
 
         color3Label.setText("Color 3:");
@@ -444,7 +453,7 @@ public class MainGUI extends javax.swing.JFrame {
         );
         color3PanelLayout.setVerticalGroup(
             color3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 71, Short.MAX_VALUE)
+            .addGap(0, 96, Short.MAX_VALUE)
         );
 
         thirdColorCheckBox.setSelected(true);
@@ -490,7 +499,7 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGap(63, 63, 63))
                     .addGroup(colorsPanelLayout.createSequentialGroup()
                         .addComponent(intensityLabel)
-                        .addContainerGap(209, Short.MAX_VALUE))))
+                        .addContainerGap(223, Short.MAX_VALUE))))
             .addGroup(colorsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(colorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -507,7 +516,7 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(thirdColorCheckBox))
                     .addComponent(color3Label))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         colorsPanelLayout.setVerticalGroup(
             colorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -557,7 +566,7 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(typePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addComponent(parametersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(guidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -583,6 +592,77 @@ public class MainGUI extends javax.swing.JFrame {
         );
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
+	try {
+	    if ( this.dottedRadioButton.isSelected() ) {
+		BufferedImage depthMap = null;
+		if ( this.textRadioButton.isSelected() ) {
+		    depthMap = generateTextMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeigh());
+		}
+		else {
+		    depthMap = getImage( this.mapFileChooser.getSelectedFile() );
+		}		
+		Color c1 = getColor1();
+		Color c2 = getColor2();
+		Color c3 = getColor3();
+		float intensity = getIntensity();
+		float obsDistance = getObservationDistance();
+		float eyeSep = getEyeSeparation();
+		float maxDepth = getMaxDepth();
+		float minDepth = getMinDepth();
+		int width = getStereogramWidth();
+		int heigh = getStereogramHeigh();
+		int horizPPI = getHorizontalPPI();		
+		
+		BufferedImage stereogram = StereogramGenerator.generateSIRD(
+				depthMap,
+				c1, c2, c3, intensity,
+				width, heigh,
+				obsDistance, eyeSep,
+				maxDepth, minDepth,				
+				horizPPI);
+		if ( this.stereogramWindow != null ) {
+		    this.stereogramWindow.dispose();
+		}
+		this.stereogramWindow = new StereogramWindow(stereogram);
+		this.stereogramWindow.setVisible( true );
+	    }
+	    else {
+		BufferedImage depthMap = null;
+		if ( this.textRadioButton.isSelected() ) {
+		    depthMap = generateTextMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeigh());
+		}
+		else {
+		    depthMap = getImage( this.mapFileChooser.getSelectedFile() );
+		}
+		BufferedImage texturePattern = getImage( this.patternFileChooser.getSelectedFile() );
+		float obsDistance = getObservationDistance();
+		float eyeSep = getEyeSeparation();
+		float maxDepth = getMaxDepth();
+		float minDepth = getMinDepth();
+		int width = getStereogramWidth();
+		int heigh = getStereogramHeigh();
+		int vertPPI = getVerticalPPI();
+		int horizPPI = getHorizontalPPI();		
+		
+		BufferedImage stereogram = StereogramGenerator.generateTexturedSIRD(
+				depthMap, texturePattern,
+				width, heigh,
+				obsDistance, eyeSep,
+				maxDepth, minDepth,				
+				horizPPI, vertPPI);
+		if ( this.stereogramWindow != null ) {
+		    this.stereogramWindow.dispose();
+		}
+		this.stereogramWindow = new StereogramWindow(stereogram);
+		this.stereogramWindow.setVisible( true );
+	    }	    
+	}
+	catch (Exception e) {
+	    JOptionPane.showMessageDialog( this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	}
+    }//GEN-LAST:event_generateButtonActionPerformed
 
     private void patternPreviewPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patternPreviewPanelMousePressed
 	if ( this.patternPreviewPanel.isEnabled() ) {
@@ -684,8 +764,8 @@ public class MainGUI extends javax.swing.JFrame {
 	    this.patternLabel.setEnabled( false );
 	    this.patternPreviewPanel.setEnabled( false );
 	    
-	    this.hPpiLabel.setEnabled( false );
-	    this.hPpiTextField.setEnabled( false );
+	    this.vPpiLabel.setEnabled( false );
+	    this.vPpiTextField.setEnabled( false );
 		    
 	    this.color1Label.setEnabled( true );
 	    this.color1Panel.setEnabled( true );
@@ -698,8 +778,8 @@ public class MainGUI extends javax.swing.JFrame {
 	    this.patternLabel.setEnabled( true );
 	    this.patternPreviewPanel.setEnabled( true );
 	    
-	    this.hPpiLabel.setEnabled( true );
-	    this.hPpiTextField.setEnabled( true );
+	    this.vPpiLabel.setEnabled( true );
+	    this.vPpiTextField.setEnabled( true );
 	    
 	    this.color1Label.setEnabled( false );
 	    this.color1Panel.setEnabled( false );
@@ -751,6 +831,106 @@ public class MainGUI extends javax.swing.JFrame {
 	    }
 	});
     }
+
+	private Color getColor1() {
+		return this.color1Panel.getBackground();
+	}
+
+	private Color getColor2() {
+		return this.color2Panel.getBackground();
+	}
+
+	private Color getColor3() {
+		return this.color3Panel.isEnabled() ? this.color3Panel.getBackground() : null;
+	}
+
+	private float getIntensity() {
+		return this.intensitySlider.getValue() / 100f;
+	}
+
+	private int getStereogramWidth() throws Exception {
+	    try {
+		return Integer.parseInt( this.widthTextField.getText().trim() );
+	    }
+	    catch (Exception e) {
+		throw new Exception("Inavlid width.");
+	    }
+	}
+
+	private int getStereogramHeigh() throws Exception {
+	    try {
+		return Integer.parseInt( this.heighTextField.getText().trim() );
+	    }
+	    catch (Exception e) {
+		throw new Exception("Inavlid heigh.");
+	    }
+	}
+
+	private float getObservationDistance() throws Exception {
+	    try {
+		return Float.parseFloat( this.observationTextField.getText().trim() );
+	    }
+	    catch (Exception e) {
+		throw new Exception("Inavlid observation distance.");
+	    }
+	}
+
+	private float getEyeSeparation() throws Exception {
+	    try {
+		return Float.parseFloat( this.eyeTextField.getText().trim() );
+	    }
+	    catch (Exception e) {
+		throw new Exception("Inavlid eye separation.");
+	    }
+	}
+
+	private float getMaxDepth() throws Exception {
+	    try {
+		return Float.parseFloat( this.maxDepthTextField.getText().trim() );
+	    }
+	    catch (Exception e) {
+		throw new Exception("Inavlid max. depth.");
+	    }
+	}
+
+	private float getMinDepth() throws Exception {
+	    try {
+		return Float.parseFloat( this.minDepthTextField.getText().trim() );
+	    }
+	    catch (Exception e) {
+		throw new Exception("Inavlid min. depth.");
+	    }
+	}
+
+	private int getHorizontalPPI() throws Exception {
+	    try {
+		return Integer.parseInt( this.hPpiTextField.getText().trim() );
+	    }
+	    catch (Exception e) {
+		throw new Exception("Inavlid horizontal PPI.");
+	    }
+	}
+	
+	private int getVerticalPPI() throws Exception {
+	    try {
+		return Integer.parseInt( this.vPpiTextField.getText().trim() );
+	    }
+	    catch (Exception e) {
+		throw new Exception("Inavlid vertical PPI.");
+	    }
+	}
+
+	private String getMapText() {
+		return this.textTextField.getText() != null ? this.textTextField.getText().trim() : "";
+	}
+	
+	private int getFontSize() {
+		return (Integer)this.sizeSpinner.getValue();
+	}
+
+	private BufferedImage generateTextMap(String text, int fontSize, int width, int heigh) {
+		return null;
+	}
     
     // Declaração de variáveis - não modifique//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
