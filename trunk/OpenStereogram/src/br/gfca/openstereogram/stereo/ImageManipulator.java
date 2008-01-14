@@ -1,6 +1,8 @@
 package br.gfca.openstereogram.stereo;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class ImageManipulator {
@@ -30,9 +32,23 @@ public class ImageManipulator {
 		return newMap;
 	}
 	
-	public static BufferedImage generateTextDepthMap(String text, int fontSize, int width, int height) {
-		// TODO
-		return null;
+	public static BufferedImage generateTextDepthMap(String text, int fontSize, int width, int height ) {
+		BufferedImage depthMap = new BufferedImage( width, height, BufferedImage.TYPE_INT_RGB );
+		Graphics g = depthMap.getGraphics();
+		g.setColor( new Color(0,0,0) );
+		g.fillRect(0, 0, width, height);
+		
+		Font f = g.getFont().deriveFont( Font.BOLD, fontSize );
+		g.setFont( f );
+		int textWidth = (int)g.getFontMetrics().getStringBounds( text, g ).getWidth();
+		int textHeight = g.getFontMetrics().getAscent();
+		
+		g.setColor( new Color(127,127,127) );
+		g.drawString( text,
+				(width - textWidth) / 2,
+				((height - textHeight) / 2) + textHeight );
+		
+		return depthMap;
 	}
 	
 	public static BufferedImage resizeTexturePattern(BufferedImage original, int maxSeparation) {
