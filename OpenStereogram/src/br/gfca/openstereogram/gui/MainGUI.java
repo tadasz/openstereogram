@@ -6,6 +6,7 @@
 
 package br.gfca.openstereogram.gui;
 
+import br.gfca.openstereogram.stereo.ImageManipulator;
 import br.gfca.openstereogram.stereo.StereogramGenerator;
 import java.awt.Color;
 import java.awt.HeadlessException;
@@ -189,7 +190,7 @@ public class MainGUI extends javax.swing.JFrame {
         sizeLabel.setEnabled(false);
 
         sizeSpinner.setEnabled(false);
-        sizeSpinner.setValue(180);
+        sizeSpinner.setValue(120);
 
         mapLabel.setText("Depth map:");
 
@@ -249,7 +250,7 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGroup(mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(patternPreviewPanel, 0, 0, Short.MAX_VALUE)
                     .addComponent(mapPreviewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         parametersPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -410,7 +411,7 @@ public class MainGUI extends javax.swing.JFrame {
         );
         color1PanelLayout.setVerticalGroup(
             color1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 96, Short.MAX_VALUE)
+            .addGap(0, 81, Short.MAX_VALUE)
         );
 
         color2Label.setText("Color 2:");
@@ -433,7 +434,7 @@ public class MainGUI extends javax.swing.JFrame {
         );
         color2PanelLayout.setVerticalGroup(
             color2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 96, Short.MAX_VALUE)
+            .addGap(0, 81, Short.MAX_VALUE)
         );
 
         color3Label.setText("Color 3:");
@@ -456,7 +457,7 @@ public class MainGUI extends javax.swing.JFrame {
         );
         color3PanelLayout.setVerticalGroup(
             color3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 96, Short.MAX_VALUE)
+            .addGap(0, 81, Short.MAX_VALUE)
         );
 
         thirdColorCheckBox.setSelected(true);
@@ -502,7 +503,7 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGap(63, 63, 63))
                     .addGroup(colorsPanelLayout.createSequentialGroup()
                         .addComponent(intensityLabel)
-                        .addContainerGap(262, Short.MAX_VALUE))))
+                        .addContainerGap(209, Short.MAX_VALUE))))
             .addGroup(colorsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(colorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -519,7 +520,7 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(thirdColorCheckBox))
                     .addComponent(color3Label))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         colorsPanelLayout.setVerticalGroup(
             colorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -571,7 +572,7 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(typePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addComponent(parametersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(guideAndGeneratePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -603,7 +604,8 @@ public class MainGUI extends javax.swing.JFrame {
 	    if ( this.dottedRadioButton.isSelected() ) {
 		BufferedImage depthMap = null;
 		if ( this.textRadioButton.isSelected() ) {
-		    depthMap = generateTextMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeight());
+		    depthMap = ImageManipulator.generateTextDepthMap(getMapText(),getFontSize(),
+		    		getStereogramWidth(), getStereogramHeight());
 		}
 		else {
 		    depthMap = getImage( this.mapFileChooser.getSelectedFile() );
@@ -636,7 +638,7 @@ public class MainGUI extends javax.swing.JFrame {
 	    else {
 		BufferedImage depthMap = null;
 		if ( this.textRadioButton.isSelected() ) {
-		    depthMap = generateTextMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeight());
+		    depthMap = ImageManipulator.generateTextDepthMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeight());
 		}
 		else {
 		    depthMap = getImage( this.mapFileChooser.getSelectedFile() );
@@ -915,10 +917,6 @@ public class MainGUI extends javax.swing.JFrame {
 	
 	private int getFontSize() {
 		return (Integer)this.sizeSpinner.getValue();
-	}
-
-	private BufferedImage generateTextMap(String text, int fontSize, int width, int height) {
-		return null;
 	}
     
     // Declaração de variáveis - não modifique//GEN-BEGIN:variables
