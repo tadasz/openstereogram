@@ -8,7 +8,6 @@ package br.gfca.openstereogram.gui;
 
 import br.gfca.openstereogram.stereo.StereogramGenerator;
 import java.awt.Color;
-import java.awt.HeadlessException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -23,7 +22,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MainGUI extends javax.swing.JFrame {
     
-    private StereogramWindow stereogramWindow;
+	private static final long serialVersionUID = 5494881572447296266L;
+	
+	private StereogramWindow stereogramWindow;
     
     /** Creates new form MainGUI */
     public MainGUI() {

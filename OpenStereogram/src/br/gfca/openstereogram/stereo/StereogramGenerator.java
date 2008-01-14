@@ -7,15 +7,12 @@ public class StereogramGenerator {
 
 	public static BufferedImage generateSIRD( BufferedImage depthMap,
 			Color color1, Color color2, Color color3, float color1Intensity,
-			int width, int heigh,
+			int width, int height,
 			float observationDistanceInches, float eyeSeparationInches,
 			float maxDepthInches, float minDepthInches,
 			int horizontalPPI ) {
 		
-		if ( width > depthMap.getWidth(null) || heigh > depthMap.getHeight(null) ) {
-			throw new IllegalArgumentException( "Depth map smaller than intended stereogram." );
-		}
-		
+		depthMap = DepthMapGenerator.resizeMap(depthMap, width, height);
 		ColorGenerator colors; 
 		if ( color3 == null ) {
 			colors = new UnbalancedColorGenerator( color1.getRGB(), color2.getRGB(), color1Intensity );
@@ -24,7 +21,7 @@ public class StereogramGenerator {
 			colors = new ColorGenerator( color1.getRGB(), color2.getRGB(), color3.getRGB() );
 		}
 		
-		BufferedImage stereogram = new BufferedImage(width, heigh, BufferedImage.TYPE_INT_RGB);
+		BufferedImage stereogram = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		int[] linksL = new int[width];
 		int[] linksR = new int[width];
 		int observationDistance = convertoToPixels(observationDistanceInches, horizontalPPI);
@@ -32,7 +29,7 @@ public class StereogramGenerator {
 		int maxdepth = getMaxDepth( convertoToPixels(maxDepthInches, horizontalPPI), observationDistance );
 		int minDepth = getMinDepth( 0.55f, maxdepth, observationDistance, convertoToPixels(minDepthInches, horizontalPPI) );
 
-		for ( int l = 0; l < heigh; l++ ) {
+		for ( int l = 0; l < height; l++ ) {
 			for ( int c = 0; c < width; c++ ) {
 				linksL[c] = c;
 				linksR[c] = c;
@@ -109,28 +106,14 @@ public class StereogramGenerator {
 		return (eyeSeparation * depth) / (depth + observationDistance);
 	}
 
-	private static BufferedImage getResizedPattern(BufferedImage texturePattern, int maxSeparation) {
-		if ( texturePattern.getWidth() < maxSeparation ) {
-			BufferedImage resized = new BufferedImage( maxSeparation, texturePattern.getHeight(), BufferedImage.TYPE_INT_RGB );
-			resized.getGraphics().drawImage( texturePattern, 0, 0, resized.getWidth(), resized.getHeight(), null);
-			return resized;
-		}
-		else {
-			return texturePattern;
-		}		
-	}
-	
 	public static BufferedImage generateTexturedSIRD( BufferedImage depthMap, BufferedImage texturePattern,
-			int width, int heigh,
+			int width, int height,
 			float observationDistanceInches, float eyeSeparationInches,
 			float maxDepthInches, float minDepthInches,
 			int horizontalPPI, int verticalPPI ) {
 		
-		if ( width > depthMap.getWidth(null) || heigh > depthMap.getHeight(null) ) {
-			throw new IllegalArgumentException( "Depth map smaller than intended stereogram." );
-		}
-		
-		BufferedImage stereogram = new BufferedImage(width, heigh, BufferedImage.TYPE_INT_RGB);
+		depthMap = DepthMapGenerator.resizeMap(depthMap, width, height);		
+		BufferedImage stereogram = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		int[] linksL = new int[width];
 		int[] linksR = new int[width];
 		int observationDistance = convertoToPixels(observationDistanceInches, horizontalPPI);
@@ -139,9 +122,9 @@ public class StereogramGenerator {
 		int minDepth = getMinDepth( 0.55f, maxDepth, observationDistance, convertoToPixels(minDepthInches, horizontalPPI) );
 		int verticalShift = verticalPPI / 16;
 		int maxSeparation = getSeparation(observationDistance, eyeSeparation, maxDepth);
-		texturePattern = getResizedPattern( texturePattern, maxSeparation );
+		texturePattern = DepthMapGenerator.resizeTexturePattern( texturePattern, maxSeparation );
 
-		for ( int l = 0; l < heigh; l++ ) {
+		for ( int l = 0; l < height; l++ ) {
 			for ( int c = 0; c < width; c++ ) {
 				linksL[c] = c;
 				linksR[c] = c;

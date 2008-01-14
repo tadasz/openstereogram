@@ -16,7 +16,9 @@ import java.awt.image.BufferedImage;
  */
 public class ImagePreviewPanel extends javax.swing.JPanel {
     
-    private Image image;
+	private static final long serialVersionUID = 66254190682260638L;
+	
+	private Image image;
     
     /** Creates new form ImagePreviewPanel */
     public ImagePreviewPanel() {
