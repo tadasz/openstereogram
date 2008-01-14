@@ -3,18 +3,18 @@ package br.gfca.openstereogram.stereo;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class DepthMapGenerator {
+public class ImageManipulator {
 
-	public static BufferedImage resizeMap( BufferedImage original, int width, int height ) {
+	public static BufferedImage resizeDepthMap( BufferedImage original, int width, int height ) {
 
 		BufferedImage newMap = new BufferedImage( width, height, BufferedImage.TYPE_INT_RGB );
 		newMap.getGraphics().setColor( new Color(0,0,0) );
-		newMap.getGraphics().fillRect(0, 0, newMap.getWidth(), newMap.getHeight());
+		newMap.getGraphics().fillRect(0, 0, width, height);
 		
-		int newHeigh = (original.getHeight() * width) / original.getWidth();
-		if ( newHeigh <= height ) {
-			int centeredY = (height - newHeigh) / 2;
-			newMap.getGraphics().drawImage( original, 0, centeredY, width, newHeigh, null);
+		int newHeight = (original.getHeight() * width) / original.getWidth();
+		if ( newHeight <= height ) {
+			int centeredY = (height - newHeight) / 2;
+			newMap.getGraphics().drawImage( original, 0, centeredY, width, newHeight, null);
 		}
 		else {
 			int newWidth = (original.getWidth() * height) / original.getHeight();
@@ -23,14 +23,15 @@ public class DepthMapGenerator {
 				newMap.getGraphics().drawImage( original, centeredX, 0, newWidth, height, null);
 			}
 			else {
-				newMap.getGraphics().drawImage( original, 0, 0, null );
+				// Should never get here
+				newMap.getGraphics().drawImage( original, 0, 0, width, height, null );
 			}
 		}
 		return newMap;
 	}
 	
 	public static BufferedImage generateTextDepthMap(String text, int fontSize, int width, int height) {
-		
+		// TODO
 		return null;
 	}
 	

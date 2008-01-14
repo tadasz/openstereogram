@@ -6,8 +6,6 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="elementButtonGroup">
     </Component>
-    <Component class="javax.swing.JColorChooser" name="colorChooser">
-    </Component>
     <Component class="javax.swing.JFileChooser" name="mapFileChooser">
       <Properties>
         <Property name="currentDirectory" type="java.io.File" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -41,6 +39,8 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Content..."/>
               </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JSeparator" name="helpSeparator">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="aboutMenuItem">
               <Properties>
@@ -76,13 +76,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="typePanel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="48" max="32767" attributes="0"/>
-                      <Component id="parametersPanel" min="-2" pref="265" max="-2" attributes="0"/>
+                      <EmptySpace pref="83" max="32767" attributes="0"/>
+                      <Component id="parametersPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="guidePanel" min="-2" max="-2" attributes="1"/>
+                      <Component id="guideAndGeneratePanel" min="-2" max="-2" attributes="1"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="mapPatternPanel" min="-2" max="-2" attributes="1"/>
+                      <Component id="mapAndPatternPanel" min="-2" max="-2" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="colorsPanel" max="32767" attributes="1"/>
                   </Group>
@@ -97,13 +97,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="typePanel" max="32767" attributes="1"/>
-                  <Component id="guidePanel" alignment="0" max="32767" attributes="0"/>
+                  <Component id="guideAndGeneratePanel" alignment="0" max="32767" attributes="0"/>
                   <Component id="parametersPanel" alignment="1" max="32767" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="colorsPanel" max="32767" attributes="0"/>
-                  <Component id="mapPatternPanel" alignment="0" max="32767" attributes="0"/>
+                  <Component id="mapAndPatternPanel" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -160,7 +160,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lookLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="RDS look:"/>
+            <Property name="text" type="java.lang.String" value="Stereogram look:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="dottedRadioButton">
@@ -242,7 +242,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="mapPatternPanel">
+    <Container class="javax.swing.JPanel" name="mapAndPatternPanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
@@ -389,10 +389,10 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="hPpiLabel" min="-2" max="-2" attributes="0"/>
                                   <Component id="minDepthLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="heighLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="heightLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="eyeTextField" alignment="0" max="32767" attributes="1"/>
                                   <Component id="minDepthTextField" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="heighTextField" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="heightTextField" alignment="0" max="32767" attributes="1"/>
                                   <Component id="hPpiTextField" alignment="0" max="32767" attributes="1"/>
                               </Group>
                               <Component id="eyeLabel" min="-2" max="-2" attributes="1"/>
@@ -430,12 +430,12 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="widthLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="heighLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="heightLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="widthTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="heighTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="heightTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -503,12 +503,12 @@
             <Property name="text" type="java.lang.String" value="640"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="heighLabel">
+        <Component class="javax.swing.JLabel" name="heightLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Heigh:"/>
+            <Property name="text" type="java.lang.String" value="Height:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="heighTextField">
+        <Component class="javax.swing.JTextField" name="heightTextField">
           <Properties>
             <Property name="text" type="java.lang.String" value="480"/>
           </Properties>
@@ -535,7 +535,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="guidePanel">
+    <Container class="javax.swing.JPanel" name="guideAndGeneratePanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
@@ -617,7 +617,7 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="intensityLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="223" max="32767" attributes="0"/>
+                          <EmptySpace pref="262" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -641,7 +641,7 @@
                       </Group>
                       <Component id="color3Label" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="66" max="32767" attributes="0"/>
+                  <EmptySpace pref="105" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
