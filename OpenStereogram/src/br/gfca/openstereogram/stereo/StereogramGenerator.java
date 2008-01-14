@@ -12,7 +12,7 @@ public class StereogramGenerator {
 			float maxDepthInches, float minDepthInches,
 			int horizontalPPI ) {
 		
-		depthMap = DepthMapGenerator.resizeMap(depthMap, width, height);
+		depthMap = ImageManipulator.resizeDepthMap(depthMap, width, height);
 		ColorGenerator colors; 
 		if ( color3 == null ) {
 			colors = new UnbalancedColorGenerator( color1.getRGB(), color2.getRGB(), color1Intensity );
@@ -112,7 +112,7 @@ public class StereogramGenerator {
 			float maxDepthInches, float minDepthInches,
 			int horizontalPPI, int verticalPPI ) {
 		
-		depthMap = DepthMapGenerator.resizeMap(depthMap, width, height);		
+		depthMap = ImageManipulator.resizeDepthMap(depthMap, width, height);		
 		BufferedImage stereogram = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		int[] linksL = new int[width];
 		int[] linksR = new int[width];
@@ -122,7 +122,7 @@ public class StereogramGenerator {
 		int minDepth = getMinDepth( 0.55f, maxDepth, observationDistance, convertoToPixels(minDepthInches, horizontalPPI) );
 		int verticalShift = verticalPPI / 16;
 		int maxSeparation = getSeparation(observationDistance, eyeSeparation, maxDepth);
-		texturePattern = DepthMapGenerator.resizeTexturePattern( texturePattern, maxSeparation );
+		texturePattern = ImageManipulator.resizeTexturePattern( texturePattern, maxSeparation );
 
 		for ( int l = 0; l < height; l++ ) {
 			for ( int c = 0; c < width; c++ ) {

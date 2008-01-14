@@ -8,9 +8,11 @@ package br.gfca.openstereogram.gui;
 
 import br.gfca.openstereogram.stereo.StereogramGenerator;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -42,7 +44,6 @@ public class MainGUI extends javax.swing.JFrame {
     private void initComponents() {
         lookButtonGroup = new javax.swing.ButtonGroup();
         elementButtonGroup = new javax.swing.ButtonGroup();
-        colorChooser = new javax.swing.JColorChooser();
         mapFileChooser = new javax.swing.JFileChooser();
         patternFileChooser = new javax.swing.JFileChooser();
         typePanel = new javax.swing.JPanel();
@@ -52,7 +53,7 @@ public class MainGUI extends javax.swing.JFrame {
         elementLabel = new javax.swing.JLabel();
         textRadioButton = new javax.swing.JRadioButton();
         mapRadioButton = new javax.swing.JRadioButton();
-        mapPatternPanel = new javax.swing.JPanel();
+        mapAndPatternPanel = new javax.swing.JPanel();
         textLabel = new javax.swing.JLabel();
         textTextField = new javax.swing.JTextField();
         sizeLabel = new javax.swing.JLabel();
@@ -72,13 +73,13 @@ public class MainGUI extends javax.swing.JFrame {
         minDepthTextField = new javax.swing.JTextField();
         widthLabel = new javax.swing.JLabel();
         widthTextField = new javax.swing.JTextField();
-        heighLabel = new javax.swing.JLabel();
-        heighTextField = new javax.swing.JTextField();
+        heightLabel = new javax.swing.JLabel();
+        heightTextField = new javax.swing.JTextField();
         vPpiLabel = new javax.swing.JLabel();
         vPpiTextField = new javax.swing.JTextField();
         hPpiLabel = new javax.swing.JLabel();
         hPpiTextField = new javax.swing.JTextField();
-        guidePanel = new javax.swing.JPanel();
+        guideAndGeneratePanel = new javax.swing.JPanel();
         guideImagePanel = new javax.swing.JPanel();
         generateButton = new javax.swing.JButton();
         colorsPanel = new javax.swing.JPanel();
@@ -95,6 +96,7 @@ public class MainGUI extends javax.swing.JFrame {
         jMenuBar = new javax.swing.JMenuBar();
         helpMenu = new javax.swing.JMenu();
         helpMenuItem = new javax.swing.JMenuItem();
+        helpSeparator = new javax.swing.JSeparator();
         aboutMenuItem = new javax.swing.JMenuItem();
 
         mapFileChooser.setCurrentDirectory(new File("./images/depthMaps/"));
@@ -107,7 +109,7 @@ public class MainGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Open Stereogram");
         typePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lookLabel.setText("RDS look:");
+        lookLabel.setText("Stereogram look:");
 
         lookButtonGroup.add(dottedRadioButton);
         dottedRadioButton.setText("Dotted");
@@ -176,7 +178,7 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGap(28, 28, 28))
         );
 
-        mapPatternPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        mapAndPatternPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         textLabel.setText("Hidden text:");
         textLabel.setEnabled(false);
 
@@ -205,46 +207,46 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout mapPatternPanelLayout = new javax.swing.GroupLayout(mapPatternPanel);
-        mapPatternPanel.setLayout(mapPatternPanelLayout);
-        mapPatternPanelLayout.setHorizontalGroup(
-            mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mapPatternPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout mapAndPatternPanelLayout = new javax.swing.GroupLayout(mapAndPatternPanel);
+        mapAndPatternPanel.setLayout(mapAndPatternPanelLayout);
+        mapAndPatternPanelLayout.setHorizontalGroup(
+            mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mapAndPatternPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textLabel)
                     .addComponent(textTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(mapPatternPanelLayout.createSequentialGroup()
-                        .addGroup(mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mapAndPatternPanelLayout.createSequentialGroup()
+                        .addGroup(mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mapLabel)
                             .addComponent(mapPreviewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
-                        .addGroup(mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(patternPreviewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(patternLabel))))
                 .addGap(23, 23, 23)
-                .addGroup(mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sizeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sizeLabel))
                 .addContainerGap())
         );
-        mapPatternPanelLayout.setVerticalGroup(
-            mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mapPatternPanelLayout.createSequentialGroup()
+        mapAndPatternPanelLayout.setVerticalGroup(
+            mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mapAndPatternPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textLabel)
                     .addComponent(sizeLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sizeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
-                .addGroup(mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mapLabel)
                     .addComponent(patternLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mapPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(mapAndPatternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(patternPreviewPanel, 0, 0, Short.MAX_VALUE)
                     .addComponent(mapPreviewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
                 .addContainerGap(29, Short.MAX_VALUE))
@@ -271,9 +273,9 @@ public class MainGUI extends javax.swing.JFrame {
 
         widthTextField.setText("640");
 
-        heighLabel.setText("Heigh:");
+        heightLabel.setText("Height:");
 
-        heighTextField.setText("480");
+        heightTextField.setText("480");
 
         vPpiLabel.setText("Vert. PPI:");
 
@@ -305,10 +307,10 @@ public class MainGUI extends javax.swing.JFrame {
                             .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(hPpiLabel)
                                 .addComponent(minDepthLabel)
-                                .addComponent(heighLabel)
+                                .addComponent(heightLabel)
                                 .addComponent(eyeTextField)
                                 .addComponent(minDepthTextField)
-                                .addComponent(heighTextField)
+                                .addComponent(heightTextField)
                                 .addComponent(hPpiTextField))
                             .addComponent(eyeLabel)))
                     .addComponent(maxDepthLabel))
@@ -336,11 +338,11 @@ public class MainGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(widthLabel)
-                    .addComponent(heighLabel))
+                    .addComponent(heightLabel))
                 .addGap(6, 6, 6)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(widthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(heighTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(heightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(vPpiLabel)
@@ -352,7 +354,7 @@ public class MainGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        guidePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        guideAndGeneratePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         guideImagePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         javax.swing.GroupLayout guideImagePanelLayout = new javax.swing.GroupLayout(guideImagePanel);
         guideImagePanel.setLayout(guideImagePanelLayout);
@@ -372,16 +374,16 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout guidePanelLayout = new javax.swing.GroupLayout(guidePanel);
-        guidePanel.setLayout(guidePanelLayout);
-        guidePanelLayout.setHorizontalGroup(
-            guidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout guideAndGeneratePanelLayout = new javax.swing.GroupLayout(guideAndGeneratePanel);
+        guideAndGeneratePanel.setLayout(guideAndGeneratePanelLayout);
+        guideAndGeneratePanelLayout.setHorizontalGroup(
+            guideAndGeneratePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(generateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
             .addComponent(guideImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        guidePanelLayout.setVerticalGroup(
-            guidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, guidePanelLayout.createSequentialGroup()
+        guideAndGeneratePanelLayout.setVerticalGroup(
+            guideAndGeneratePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, guideAndGeneratePanelLayout.createSequentialGroup()
                 .addComponent(guideImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(generateButton))
@@ -500,7 +502,7 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGap(63, 63, 63))
                     .addGroup(colorsPanelLayout.createSequentialGroup()
                         .addComponent(intensityLabel)
-                        .addContainerGap(223, Short.MAX_VALUE))))
+                        .addContainerGap(262, Short.MAX_VALUE))))
             .addGroup(colorsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(colorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -517,7 +519,7 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(thirdColorCheckBox))
                     .addComponent(color3Label))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         colorsPanelLayout.setVerticalGroup(
             colorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,6 +553,8 @@ public class MainGUI extends javax.swing.JFrame {
         helpMenuItem.setText("Content...");
         helpMenu.add(helpMenuItem);
 
+        helpMenu.add(helpSeparator);
+
         aboutMenuItem.setText("About...");
         helpMenu.add(aboutMenuItem);
 
@@ -567,12 +571,12 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(typePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addComponent(parametersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(guidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(guideAndGeneratePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(mapPatternPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mapAndPatternPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(colorsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -583,12 +587,12 @@ public class MainGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(typePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(guidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(guideAndGeneratePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(parametersPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(colorsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mapPatternPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(mapAndPatternPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pack();
@@ -599,7 +603,7 @@ public class MainGUI extends javax.swing.JFrame {
 	    if ( this.dottedRadioButton.isSelected() ) {
 		BufferedImage depthMap = null;
 		if ( this.textRadioButton.isSelected() ) {
-		    depthMap = generateTextMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeigh());
+		    depthMap = generateTextMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeight());
 		}
 		else {
 		    depthMap = getImage( this.mapFileChooser.getSelectedFile() );
@@ -613,13 +617,13 @@ public class MainGUI extends javax.swing.JFrame {
 		float maxDepth = getMaxDepth();
 		float minDepth = getMinDepth();
 		int width = getStereogramWidth();
-		int heigh = getStereogramHeigh();
+		int height = getStereogramHeight();
 		int horizPPI = getHorizontalPPI();		
 		
 		BufferedImage stereogram = StereogramGenerator.generateSIRD(
 				depthMap,
 				c1, c2, c3, intensity,
-				width, heigh,
+				width, height,
 				obsDistance, eyeSep,
 				maxDepth, minDepth,				
 				horizPPI);
@@ -632,7 +636,7 @@ public class MainGUI extends javax.swing.JFrame {
 	    else {
 		BufferedImage depthMap = null;
 		if ( this.textRadioButton.isSelected() ) {
-		    depthMap = generateTextMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeigh());
+		    depthMap = generateTextMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeight());
 		}
 		else {
 		    depthMap = getImage( this.mapFileChooser.getSelectedFile() );
@@ -643,13 +647,13 @@ public class MainGUI extends javax.swing.JFrame {
 		float maxDepth = getMaxDepth();
 		float minDepth = getMinDepth();
 		int width = getStereogramWidth();
-		int heigh = getStereogramHeigh();
+		int height = getStereogramHeight();
 		int vertPPI = getVerticalPPI();
 		int horizPPI = getHorizontalPPI();		
 		
 		BufferedImage stereogram = StereogramGenerator.generateTexturedSIRD(
 				depthMap, texturePattern,
-				width, heigh,
+				width, height,
 				obsDistance, eyeSep,
 				maxDepth, minDepth,				
 				horizPPI, vertPPI);
@@ -661,7 +665,9 @@ public class MainGUI extends javax.swing.JFrame {
 	    }	    
 	}
 	catch (Exception e) {
-	    JOptionPane.showMessageDialog( this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	    JOptionPane.showMessageDialog( this, "Error generating stereogram." +
+		    System.getProperty("line.separator") +
+		    "ERROR: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
     }//GEN-LAST:event_generateButtonActionPerformed
 
@@ -669,20 +675,15 @@ public class MainGUI extends javax.swing.JFrame {
 	if ( this.patternPreviewPanel.isEnabled() ) {
 	    int button = this.patternFileChooser.showOpenDialog( this );
 	    if ( button == JFileChooser.APPROVE_OPTION ) {
-		File f = this.patternFileChooser.getSelectedFile();
-		if ( f != null && f.exists() && f.isFile() && f.canRead() ) {
+		try {
+		    File f = this.patternFileChooser.getSelectedFile();
 		    BufferedImage bf = this.getImage( f );
-		    if ( bf != null ) {
-			this.patternPreviewPanel.setImage( bf );
-		    }
-		    else {
-			this.patternPreviewPanel.resetImage();
-			// TODO error
-		    }
+		    this.patternPreviewPanel.setImage( bf );
 		}
-		else {
-		    this.patternPreviewPanel.resetImage();
-		    // TODO error
+		catch (Exception e) {
+    		    this.patternPreviewPanel.resetImage();
+    		    this.patternFileChooser.setSelectedFile( null );
+		    JOptionPane.showMessageDialog( this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	    }
 	}
@@ -692,21 +693,15 @@ public class MainGUI extends javax.swing.JFrame {
 	if ( this.mapPreviewPanel.isEnabled() ) {
 	    int button = this.mapFileChooser.showOpenDialog( this );
 	    if ( button == JFileChooser.APPROVE_OPTION ) {
-		File f = this.mapFileChooser.getSelectedFile();
-		if ( f != null && f.exists() && f.isFile() && f.canRead() ) {
+		try {
+		    File f = this.mapFileChooser.getSelectedFile();
 		    BufferedImage bf = this.getImage( f );
-		    if ( bf != null ) {
-			this.mapPreviewPanel.setImage( bf );
-		    }
-		    else {
-			this.mapPreviewPanel.resetImage();
-			// TODO error
-		    }
+		    this.mapPreviewPanel.setImage( bf );
 		}
-		else {
-		    this.mapPreviewPanel.resetImage();
-		    // TODO error
-		}
+		catch (Exception e) {
+    		    this.mapPreviewPanel.resetImage();
+		    JOptionPane.showMessageDialog( this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}		
 	    }
 	}
     }//GEN-LAST:event_mapPreviewPanelMousePressed
@@ -731,12 +726,15 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_color1PanelMousePressed
 
 	private void handleColorChooser( JPanel colorPanel, int panelNumber) {
-		if ( colorPanel.isEnabled() ) {
-		    Color newColor = this.colorChooser.showDialog( this, "Select color " + panelNumber, colorPanel.getBackground() );
-		    if ( newColor != null ) {
-			colorPanel.setBackground( newColor );
-		    }
+		try {
+			if ( colorPanel.isEnabled() ) {
+			    Color newColor = JColorChooser.showDialog( this, "Select color " + panelNumber, colorPanel.getBackground() );
+			    if ( newColor != null ) {
+				colorPanel.setBackground( newColor );
+			    }
+			}
 		}
+		catch (HeadlessException he) {}
 	}
 
     private void textRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_textRadioButtonStateChanged
@@ -812,27 +810,17 @@ public class MainGUI extends javax.swing.JFrame {
 	}
     }//GEN-LAST:event_thirdColorCheckBoxActionPerformed
         
-    	private BufferedImage getImage(File file) {
+    	private BufferedImage getImage(File file) throws Exception {
 		try {
-			BufferedImage bf = ImageIO.read( file );
-			return bf;
+			return ImageIO.read( file );
 		}
 		catch (Exception e) {
-			return null;
+			throw new Exception("Error while loading image." +
+				System.getProperty("line.separator") +
+				"ERROR: " + e.getMessage());
 		}
 	}
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-	java.awt.EventQueue.invokeLater(new Runnable() {
-	    public void run() {
-		new MainGUI().setVisible(true);
-	    }
-	});
-    }
-
 	private Color getColor1() {
 		return this.color1Panel.getBackground();
 	}
@@ -858,12 +846,12 @@ public class MainGUI extends javax.swing.JFrame {
 	    }
 	}
 
-	private int getStereogramHeigh() throws Exception {
+	private int getStereogramHeight() throws Exception {
 	    try {
-		return Integer.parseInt( this.heighTextField.getText().trim() );
+		return Integer.parseInt( this.heightTextField.getText().trim() );
 	    }
 	    catch (Exception e) {
-		throw new Exception("Inavlid heigh.");
+		throw new Exception("Inavlid height.");
 	    }
 	}
 
@@ -929,7 +917,7 @@ public class MainGUI extends javax.swing.JFrame {
 		return (Integer)this.sizeSpinner.getValue();
 	}
 
-	private BufferedImage generateTextMap(String text, int fontSize, int width, int heigh) {
+	private BufferedImage generateTextMap(String text, int fontSize, int width, int height) {
 		return null;
 	}
     
@@ -941,7 +929,6 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JPanel color2Panel;
     private javax.swing.JLabel color3Label;
     private javax.swing.JPanel color3Panel;
-    private javax.swing.JColorChooser colorChooser;
     private javax.swing.JPanel colorsPanel;
     private javax.swing.JRadioButton dottedRadioButton;
     private javax.swing.ButtonGroup elementButtonGroup;
@@ -949,22 +936,23 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel eyeLabel;
     private javax.swing.JTextField eyeTextField;
     private javax.swing.JButton generateButton;
+    private javax.swing.JPanel guideAndGeneratePanel;
     private javax.swing.JPanel guideImagePanel;
-    private javax.swing.JPanel guidePanel;
     private javax.swing.JLabel hPpiLabel;
     private javax.swing.JTextField hPpiTextField;
-    private javax.swing.JLabel heighLabel;
-    private javax.swing.JTextField heighTextField;
+    private javax.swing.JLabel heightLabel;
+    private javax.swing.JTextField heightTextField;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
+    private javax.swing.JSeparator helpSeparator;
     private javax.swing.JLabel intensityLabel;
     private javax.swing.JSlider intensitySlider;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.ButtonGroup lookButtonGroup;
     private javax.swing.JLabel lookLabel;
+    private javax.swing.JPanel mapAndPatternPanel;
     private javax.swing.JFileChooser mapFileChooser;
     private javax.swing.JLabel mapLabel;
-    private javax.swing.JPanel mapPatternPanel;
     private br.gfca.openstereogram.gui.ImagePreviewPanel mapPreviewPanel;
     private javax.swing.JRadioButton mapRadioButton;
     private javax.swing.JLabel maxDepthLabel;
