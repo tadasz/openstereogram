@@ -6,6 +6,8 @@
 
 package br.gfca.openstereogram.gui;
 
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -40,7 +42,8 @@ public class ImagePreviewPanel extends javax.swing.JPanel {
 	super.paint( g );
 	
 	if ( this.image == null ) {
-	    g.drawString("<Click to open>", 0, this.getHeight() / 2);
+            int textSize = this.getFontMetrics( this.getFont() ).stringWidth("<Click to open>");
+	    g.drawString("<Click to open>", (this.getWidth() - textSize) / 2, this.getHeight() / 2);
 	}
 	else {
 	    g.drawImage( this.image, 0, 0, null );
