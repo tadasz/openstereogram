@@ -3,7 +3,6 @@
  *
  * Created on 12 de Janeiro de 2008, 19:37
  */
-
 package br.gfca.openstereogram.gui;
 
 import br.gfca.openstereogram.stereo.ImageManipulator;
@@ -25,18 +24,17 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author  Gustavo
  */
 public class MainGUI extends javax.swing.JFrame {
-    
-	private static final long serialVersionUID = 5494881572447296266L;
-	
-	private StereogramWindow stereogramWindow;
-    
+
+    private static final long serialVersionUID = 5494881572447296266L;
+    private StereogramWindow stereogramWindow;
+
     /** Creates new form MainGUI */
     public MainGUI() {
-	initComponents();
-	this.setLocationRelativeTo( null );
-	this.stereogramWindow = null;
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.stereogramWindow = null;
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -207,13 +205,13 @@ public class MainGUI extends javax.swing.JFrame {
         vPpiLabel.setText("Vert. PPI:");
         parametersPanel.add(vPpiLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 100, -1));
 
-        vPpiTextField.setText("72");
+        vPpiTextField.setText("81");
         parametersPanel.add(vPpiTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 50, -1));
 
         hPpiLabel.setText("Horiz. PPI:");
         parametersPanel.add(hPpiLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 100, -1));
 
-        hPpiTextField.setText("72");
+        hPpiTextField.setText("81");
         parametersPanel.add(hPpiTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 50, -1));
 
         topPanel.add(parametersPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 240, 250));
@@ -443,6 +441,11 @@ public class MainGUI extends javax.swing.JFrame {
         helpMenu.add(helpSeparator);
 
         aboutMenuItem.setText("About...");
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMenuItemActionPerformed(evt);
+            }
+        });
         helpMenu.add(aboutMenuItem);
 
         jMenuBar.add(helpMenu);
@@ -474,216 +477,207 @@ public class MainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
-	try {
-	    if ( this.dottedRadioButton.isSelected() ) {
-		BufferedImage depthMap = null;
-		if ( this.textRadioButton.isSelected() ) {
-		    depthMap = ImageManipulator.generateTextDepthMap(getMapText(),getFontSize(),
-		    		getStereogramWidth(), getStereogramHeight());
-		}
-		else {
-		    depthMap = getImage( this.mapFileChooser.getSelectedFile() );
-		}		
-		Color c1 = getColor1();
-		Color c2 = getColor2();
-		Color c3 = getColor3();
-		float intensity = getIntensity();
-		float obsDistance = getObservationDistance();
-		float eyeSep = getEyeSeparation();
-		float maxDepth = getMaxDepth();
-		float minDepth = getMinDepth();
-		int width = getStereogramWidth();
-		int height = getStereogramHeight();
-		int horizPPI = getHorizontalPPI();		
-		
-		BufferedImage stereogram = StereogramGenerator.generateSIRD(
-				depthMap,
-				c1, c2, c3, intensity,
-				width, height,
-				obsDistance, eyeSep,
-				maxDepth, minDepth,				
-				horizPPI);
-		if ( this.stereogramWindow != null ) {
-		    this.stereogramWindow.dispose();
-		}
-		this.stereogramWindow = new StereogramWindow(stereogram);
-		this.stereogramWindow.setVisible( true );
-	    }
-	    else {
-		BufferedImage depthMap = null;
-		if ( this.textRadioButton.isSelected() ) {
-		    depthMap = ImageManipulator.generateTextDepthMap( getMapText(), getFontSize(),  getStereogramWidth(), getStereogramHeight());
-		}
-		else {
-		    depthMap = getImage( this.mapFileChooser.getSelectedFile() );
-		}
-		BufferedImage texturePattern = getImage( this.patternFileChooser.getSelectedFile() );
-		float obsDistance = getObservationDistance();
-		float eyeSep = getEyeSeparation();
-		float maxDepth = getMaxDepth();
-		float minDepth = getMinDepth();
-		int width = getStereogramWidth();
-		int height = getStereogramHeight();
-		int vertPPI = getVerticalPPI();
-		int horizPPI = getHorizontalPPI();		
-		
-		BufferedImage stereogram = StereogramGenerator.generateTexturedSIRD(
-				depthMap, texturePattern,
-				width, height,
-				obsDistance, eyeSep,
-				maxDepth, minDepth,				
-				horizPPI, vertPPI);
-		if ( this.stereogramWindow != null ) {
-		    this.stereogramWindow.dispose();
-		}
-		this.stereogramWindow = new StereogramWindow(stereogram);
-		this.stereogramWindow.setVisible( true );
-	    }	    
-	}
-	catch (Exception e) {
-	    JOptionPane.showMessageDialog( this, "Error generating stereogram." +
-		    System.getProperty("line.separator") +
-		    "ERROR: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-	}
+        try {
+            if (this.dottedRadioButton.isSelected()) {
+                BufferedImage depthMap = null;
+                if (this.textRadioButton.isSelected()) {
+                    depthMap = ImageManipulator.generateTextDepthMap(getMapText(), getFontSize(),
+                            getStereogramWidth(), getStereogramHeight());
+                } else {
+                    depthMap = getImage(this.mapFileChooser.getSelectedFile());
+                }
+                Color c1 = getColor1();
+                Color c2 = getColor2();
+                Color c3 = getColor3();
+                float intensity = getIntensity();
+                float obsDistance = getObservationDistance();
+                float eyeSep = getEyeSeparation();
+                float maxDepth = getMaxDepth();
+                float minDepth = getMinDepth();
+                int width = getStereogramWidth();
+                int height = getStereogramHeight();
+                int horizPPI = getHorizontalPPI();
+
+                BufferedImage stereogram = StereogramGenerator.generateSIRD(
+                        depthMap,
+                        c1, c2, c3, intensity,
+                        width, height,
+                        obsDistance, eyeSep,
+                        maxDepth, minDepth,
+                        horizPPI);
+                if (this.stereogramWindow != null) {
+                    this.stereogramWindow.dispose();
+                }
+                this.stereogramWindow = new StereogramWindow(stereogram);
+                this.stereogramWindow.setVisible(true);
+            } else {
+                BufferedImage depthMap = null;
+                if (this.textRadioButton.isSelected()) {
+                    depthMap = ImageManipulator.generateTextDepthMap(getMapText(), getFontSize(), getStereogramWidth(), getStereogramHeight());
+                } else {
+                    depthMap = getImage(this.mapFileChooser.getSelectedFile());
+                }
+                BufferedImage texturePattern = getImage(this.patternFileChooser.getSelectedFile());
+                float obsDistance = getObservationDistance();
+                float eyeSep = getEyeSeparation();
+                float maxDepth = getMaxDepth();
+                float minDepth = getMinDepth();
+                int width = getStereogramWidth();
+                int height = getStereogramHeight();
+                int vertPPI = getVerticalPPI();
+                int horizPPI = getHorizontalPPI();
+
+                BufferedImage stereogram = StereogramGenerator.generateTexturedSIRD(
+                        depthMap, texturePattern,
+                        width, height,
+                        obsDistance, eyeSep,
+                        maxDepth, minDepth,
+                        horizPPI, vertPPI);
+                if (this.stereogramWindow != null) {
+                    this.stereogramWindow.dispose();
+                }
+                this.stereogramWindow = new StereogramWindow(stereogram);
+                this.stereogramWindow.setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error generating stereogram." +
+                    System.getProperty("line.separator") +
+                    "ERROR: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_generateButtonActionPerformed
 
     private void patternPreviewPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patternPreviewPanelMousePressed
-	if ( this.patternPreviewPanel.isEnabled() ) {
-	    int button = this.patternFileChooser.showOpenDialog( this );
-	    if ( button == JFileChooser.APPROVE_OPTION ) {
-		try {
-		    File f = this.patternFileChooser.getSelectedFile();
-		    BufferedImage bf = this.getImage( f );
-		    this.patternPreviewPanel.setImage( bf );
-		}
-		catch (Exception e) {
-    		    this.patternPreviewPanel.resetImage();
-    		    this.patternFileChooser.setSelectedFile( null );
-		    JOptionPane.showMessageDialog( this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		}
-	    }
-	}
+        if (this.patternPreviewPanel.isEnabled()) {
+            int button = this.patternFileChooser.showOpenDialog(this);
+            if (button == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File f = this.patternFileChooser.getSelectedFile();
+                    BufferedImage bf = this.getImage(f);
+                    this.patternPreviewPanel.setImage(bf);
+                } catch (Exception e) {
+                    this.patternPreviewPanel.resetImage();
+                    this.patternFileChooser.setSelectedFile(null);
+                    JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }//GEN-LAST:event_patternPreviewPanelMousePressed
 
     private void mapPreviewPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mapPreviewPanelMousePressed
-	if ( this.mapPreviewPanel.isEnabled() ) {
-	    int button = this.mapFileChooser.showOpenDialog( this );
-	    if ( button == JFileChooser.APPROVE_OPTION ) {
-		try {
-		    File f = this.mapFileChooser.getSelectedFile();
-		    BufferedImage bf = this.getImage( f );
-		    this.mapPreviewPanel.setImage( bf );
-		}
-		catch (Exception e) {
-    		    this.mapPreviewPanel.resetImage();
-		    JOptionPane.showMessageDialog( this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		}		
-	    }
-	}
+        if (this.mapPreviewPanel.isEnabled()) {
+            int button = this.mapFileChooser.showOpenDialog(this);
+            if (button == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File f = this.mapFileChooser.getSelectedFile();
+                    BufferedImage bf = this.getImage(f);
+                    this.mapPreviewPanel.setImage(bf);
+                } catch (Exception e) {
+                    this.mapPreviewPanel.resetImage();
+                    JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }//GEN-LAST:event_mapPreviewPanelMousePressed
 
     private void intensitySliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_intensitySliderStateChanged
-	if ( this.intensitySlider.isEnabled() ) {
-	    int value = this.intensitySlider.getValue();
-	    this.percentLabel.setText( value + "%" );
-	}
+        if (this.intensitySlider.isEnabled()) {
+            int value = this.intensitySlider.getValue();
+            this.percentLabel.setText(value + "%");
+        }
     }//GEN-LAST:event_intensitySliderStateChanged
 
     private void color3PanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_color3PanelMousePressed
-	this.handleColorChooser( this.color3Panel, 3);
+        this.handleColorChooser(this.color3Panel, 3);
     }//GEN-LAST:event_color3PanelMousePressed
 
     private void color2PanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_color2PanelMousePressed
-	this.handleColorChooser( this.color2Panel, 2);
+        this.handleColorChooser(this.color2Panel, 2);
     }//GEN-LAST:event_color2PanelMousePressed
 
     private void color1PanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_color1PanelMousePressed
-	this.handleColorChooser( this.color1Panel, 1);
+        this.handleColorChooser(this.color1Panel, 1);
     }//GEN-LAST:event_color1PanelMousePressed
 
-	private void handleColorChooser( JPanel colorPanel, int panelNumber) {
-		try {
-			if ( colorPanel.isEnabled() ) {
-			    Color newColor = JColorChooser.showDialog( this, "Select color " + panelNumber, colorPanel.getBackground() );
-			    if ( newColor != null ) {
-				colorPanel.setBackground( newColor );
-			    }
-			}
-		}
-		catch (HeadlessException he) {}
-	}
+    private void handleColorChooser(JPanel colorPanel, int panelNumber) {
+        try {
+            if (colorPanel.isEnabled()) {
+                Color newColor = JColorChooser.showDialog(this, "Select color " + panelNumber, colorPanel.getBackground());
+                if (newColor != null) {
+                    colorPanel.setBackground(newColor);
+                }
+            }
+        } catch (HeadlessException he) {
+        }
+    }
 
     private void textRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_textRadioButtonStateChanged
-	if ( this.textRadioButton.isSelected() ) {
-	    this.textLabel.setEnabled( true );
-	    this.textTextField.setEnabled( true );
-	    this.sizeLabel.setEnabled( true );
-	    this.sizeSpinner.setEnabled( true );
-	
-	    this.mapLabel.setEnabled( false );
-	    this.mapPreviewPanel.setEnabled( false );
-	}
-	else {
-	    this.textLabel.setEnabled( false );
-	    this.textTextField.setEnabled( false );
-	    this.sizeLabel.setEnabled( false );
-	    this.sizeSpinner.setEnabled( false );
-	
-	    this.mapLabel.setEnabled( true );
-	    this.mapPreviewPanel.setEnabled( true );
-	}
+        if (this.textRadioButton.isSelected()) {
+            this.textLabel.setEnabled(true);
+            this.textTextField.setEnabled(true);
+            this.sizeLabel.setEnabled(true);
+            this.sizeSpinner.setEnabled(true);
+
+            this.mapLabel.setEnabled(false);
+            this.mapPreviewPanel.setEnabled(false);
+        } else {
+            this.textLabel.setEnabled(false);
+            this.textTextField.setEnabled(false);
+            this.sizeLabel.setEnabled(false);
+            this.sizeSpinner.setEnabled(false);
+
+            this.mapLabel.setEnabled(true);
+            this.mapPreviewPanel.setEnabled(true);
+        }
     }//GEN-LAST:event_textRadioButtonStateChanged
 
     private void dottedRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_dottedRadioButtonStateChanged
-	if ( this.dottedRadioButton.isSelected() ) {
-	    this.patternLabel.setEnabled( false );
-	    this.patternPreviewPanel.setEnabled( false );
-	    
-	    this.vPpiLabel.setEnabled( false );
-	    this.vPpiTextField.setEnabled( false );
-		    
-	    this.color1Label.setEnabled( true );
-	    this.color1Panel.setEnabled( true );
-	    this.color2Label.setEnabled( true );
-	    this.color2Panel.setEnabled( true );
-	    this.thirdColorCheckBox.setEnabled( true );
-	    this.thirdColorCheckBoxActionPerformed( null );
-	}
-	else {
-	    this.patternLabel.setEnabled( true );
-	    this.patternPreviewPanel.setEnabled( true );
-	    
-	    this.vPpiLabel.setEnabled( true );
-	    this.vPpiTextField.setEnabled( true );
-	    
-	    this.color1Label.setEnabled( false );
-	    this.color1Panel.setEnabled( false );
-	    this.color2Label.setEnabled( false );
-	    this.color2Panel.setEnabled( false );
-	    this.color3Label.setEnabled( false );
-	    this.color3Panel.setEnabled( false );
-	    this.thirdColorCheckBox.setEnabled( false );
-	    this.intensityLabel.setEnabled( false );
-	    this.intensitySlider.setEnabled( false );
-	    this.percentLabel.setEnabled( false );		    
-	}
+        if (this.dottedRadioButton.isSelected()) {
+            this.patternLabel.setEnabled(false);
+            this.patternPreviewPanel.setEnabled(false);
+
+            this.vPpiLabel.setEnabled(false);
+            this.vPpiTextField.setEnabled(false);
+
+            this.color1Label.setEnabled(true);
+            this.color1Panel.setEnabled(true);
+            this.color2Label.setEnabled(true);
+            this.color2Panel.setEnabled(true);
+            this.thirdColorCheckBox.setEnabled(true);
+            this.thirdColorCheckBoxActionPerformed(null);
+        } else {
+            this.patternLabel.setEnabled(true);
+            this.patternPreviewPanel.setEnabled(true);
+
+            this.vPpiLabel.setEnabled(true);
+            this.vPpiTextField.setEnabled(true);
+
+            this.color1Label.setEnabled(false);
+            this.color1Panel.setEnabled(false);
+            this.color2Label.setEnabled(false);
+            this.color2Panel.setEnabled(false);
+            this.color3Label.setEnabled(false);
+            this.color3Panel.setEnabled(false);
+            this.thirdColorCheckBox.setEnabled(false);
+            this.intensityLabel.setEnabled(false);
+            this.intensitySlider.setEnabled(false);
+            this.percentLabel.setEnabled(false);
+        }
     }//GEN-LAST:event_dottedRadioButtonStateChanged
 
     private void thirdColorCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thirdColorCheckBoxActionPerformed
-	if ( this.thirdColorCheckBox.isSelected() ) {
-	    this.color3Label.setEnabled( true );
-	    this.color3Panel.setEnabled( true );
-	    this.intensityLabel.setEnabled( false );
-	    this.intensitySlider.setEnabled( false ); 
-	    this.percentLabel.setEnabled( false );
-	}
-	else {
-	    this.color3Label.setEnabled( false );
-	    this.color3Panel.setEnabled( false );
-	    this.intensityLabel.setEnabled( true );
-	    this.intensitySlider.setEnabled( true ); 
-	    this.percentLabel.setEnabled( true );
-	}
+        if (this.thirdColorCheckBox.isSelected()) {
+            this.color3Label.setEnabled(true);
+            this.color3Panel.setEnabled(true);
+            this.intensityLabel.setEnabled(false);
+            this.intensitySlider.setEnabled(false);
+            this.percentLabel.setEnabled(false);
+        } else {
+            this.color3Label.setEnabled(false);
+            this.color3Panel.setEnabled(false);
+            this.intensityLabel.setEnabled(true);
+            this.intensitySlider.setEnabled(true);
+            this.percentLabel.setEnabled(true);
+        }
     }//GEN-LAST:event_thirdColorCheckBoxActionPerformed
 
     private void mapPreviewPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mapPreviewPanelMouseEntered
@@ -726,117 +720,111 @@ public class MainGUI extends javax.swing.JFrame {
         this.changeMouseCursor(true);
     }//GEN-LAST:event_color3PanelMouseExited
 
-    private void changeMouseCursor( boolean isDefault ) {
-        this.setCursor( isDefault ? Cursor.getDefaultCursor() : Cursor.getPredefinedCursor(Cursor.HAND_CURSOR) );
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+        new AboutDialog( this, true ).setVisible(true);
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+    private void changeMouseCursor(boolean isDefault) {
+        this.setCursor(isDefault ? Cursor.getDefaultCursor() : Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
-    
-    	private BufferedImage getImage(File file) throws Exception {
-		try {
-			return ImageIO.read( file );
-		}
-		catch (Exception e) {
-			throw new Exception("Error while loading image." +
-				System.getProperty("line.separator") +
-				"ERROR: " + e.getMessage());
-		}
-	}
-    
-	private Color getColor1() {
-		return this.color1Panel.getBackground();
-	}
 
-	private Color getColor2() {
-		return this.color2Panel.getBackground();
-	}
+    private BufferedImage getImage(File file) throws Exception {
+        try {
+            return ImageIO.read(file);
+        } catch (Exception e) {
+            throw new Exception("Error while loading image." +
+                    System.getProperty("line.separator") +
+                    "ERROR: " + e.getMessage());
+        }
+    }
 
-	private Color getColor3() {
-		return this.color3Panel.isEnabled() ? this.color3Panel.getBackground() : null;
-	}
+    private Color getColor1() {
+        return this.color1Panel.getBackground();
+    }
 
-	private float getIntensity() {
-		return this.intensitySlider.getValue() / 100f;
-	}
+    private Color getColor2() {
+        return this.color2Panel.getBackground();
+    }
 
-	private int getStereogramWidth() throws Exception {
-	    try {
-		return Integer.parseInt( this.widthTextField.getText().trim() );
-	    }
-	    catch (Exception e) {
-		throw new Exception("Inavlid width.");
-	    }
-	}
+    private Color getColor3() {
+        return this.color3Panel.isEnabled() ? this.color3Panel.getBackground() : null;
+    }
 
-	private int getStereogramHeight() throws Exception {
-	    try {
-		return Integer.parseInt( this.heightTextField.getText().trim() );
-	    }
-	    catch (Exception e) {
-		throw new Exception("Inavlid height.");
-	    }
-	}
+    private float getIntensity() {
+        return this.intensitySlider.getValue() / 100f;
+    }
 
-	private float getObservationDistance() throws Exception {
-	    try {
-		return Float.parseFloat( this.observationTextField.getText().trim() );
-	    }
-	    catch (Exception e) {
-		throw new Exception("Inavlid observation distance.");
-	    }
-	}
+    private int getStereogramWidth() throws Exception {
+        try {
+            return Integer.parseInt(this.widthTextField.getText().trim());
+        } catch (Exception e) {
+            throw new Exception("Inavlid width.");
+        }
+    }
 
-	private float getEyeSeparation() throws Exception {
-	    try {
-		return Float.parseFloat( this.eyeTextField.getText().trim() );
-	    }
-	    catch (Exception e) {
-		throw new Exception("Inavlid eye separation.");
-	    }
-	}
+    private int getStereogramHeight() throws Exception {
+        try {
+            return Integer.parseInt(this.heightTextField.getText().trim());
+        } catch (Exception e) {
+            throw new Exception("Inavlid height.");
+        }
+    }
 
-	private float getMaxDepth() throws Exception {
-	    try {
-		return Float.parseFloat( this.maxDepthTextField.getText().trim() );
-	    }
-	    catch (Exception e) {
-		throw new Exception("Inavlid max. depth.");
-	    }
-	}
+    private float getObservationDistance() throws Exception {
+        try {
+            return Float.parseFloat(this.observationTextField.getText().trim());
+        } catch (Exception e) {
+            throw new Exception("Inavlid observation distance.");
+        }
+    }
 
-	private float getMinDepth() throws Exception {
-	    try {
-		return Float.parseFloat( this.minDepthTextField.getText().trim() );
-	    }
-	    catch (Exception e) {
-		throw new Exception("Inavlid min. depth.");
-	    }
-	}
+    private float getEyeSeparation() throws Exception {
+        try {
+            return Float.parseFloat(this.eyeTextField.getText().trim());
+        } catch (Exception e) {
+            throw new Exception("Inavlid eye separation.");
+        }
+    }
 
-	private int getHorizontalPPI() throws Exception {
-	    try {
-		return Integer.parseInt( this.hPpiTextField.getText().trim() );
-	    }
-	    catch (Exception e) {
-		throw new Exception("Inavlid horizontal PPI.");
-	    }
-	}
-	
-	private int getVerticalPPI() throws Exception {
-	    try {
-		return Integer.parseInt( this.vPpiTextField.getText().trim() );
-	    }
-	    catch (Exception e) {
-		throw new Exception("Inavlid vertical PPI.");
-	    }
-	}
+    private float getMaxDepth() throws Exception {
+        try {
+            return Float.parseFloat(this.maxDepthTextField.getText().trim());
+        } catch (Exception e) {
+            throw new Exception("Inavlid max. depth.");
+        }
+    }
 
-	private String getMapText() {
-		return this.textTextField.getText() != null ? this.textTextField.getText().trim() : "";
-	}
-	
-	private int getFontSize() {
-		return (Integer)this.sizeSpinner.getValue();
-	}
-    
+    private float getMinDepth() throws Exception {
+        try {
+            return Float.parseFloat(this.minDepthTextField.getText().trim());
+        } catch (Exception e) {
+            throw new Exception("Inavlid min. depth.");
+        }
+    }
+
+    private int getHorizontalPPI() throws Exception {
+        try {
+            return Integer.parseInt(this.hPpiTextField.getText().trim());
+        } catch (Exception e) {
+            throw new Exception("Inavlid horizontal PPI.");
+        }
+    }
+
+    private int getVerticalPPI() throws Exception {
+        try {
+            return Integer.parseInt(this.vPpiTextField.getText().trim());
+        } catch (Exception e) {
+            throw new Exception("Inavlid vertical PPI.");
+        }
+    }
+
+    private String getMapText() {
+        return this.textTextField.getText() != null ? this.textTextField.getText().trim() : "";
+    }
+
+    private int getFontSize() {
+        return (Integer) this.sizeSpinner.getValue();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JPanel bottomPanel;
@@ -897,5 +885,4 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel widthLabel;
     private javax.swing.JTextField widthTextField;
     // End of variables declaration//GEN-END:variables
-    
 }

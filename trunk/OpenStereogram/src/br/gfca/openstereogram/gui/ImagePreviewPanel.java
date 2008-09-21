@@ -3,11 +3,8 @@
  *
  * Created on 13 de Janeiro de 2008, 10:50
  */
-
 package br.gfca.openstereogram.gui;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -17,39 +14,37 @@ import java.awt.image.BufferedImage;
  * @author  Gustavo
  */
 public class ImagePreviewPanel extends javax.swing.JPanel {
-    
-	private static final long serialVersionUID = 66254190682260638L;
-	
-	private Image image;
-    
+
+    private static final long serialVersionUID = 66254190682260638L;
+    private Image image;
+
     /** Creates new form ImagePreviewPanel */
     public ImagePreviewPanel() {
-	initComponents();
+        initComponents();
     }
-    
-    public void setImage( BufferedImage image ) {
-	this.image = image.getScaledInstance( this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT );
-	this.repaint();
+
+    public void setImage(BufferedImage image) {
+        this.image = image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT);
+        this.repaint();
     }
-    
+
     public void resetImage() {
-	this.image = null;
-	this.repaint();
+        this.image = null;
+        this.repaint();
     }
-    
+
     @Override
     public void paint(Graphics g) {
-	super.paint( g );
-	
-	if ( this.image == null ) {
-            int textSize = this.getFontMetrics( this.getFont() ).stringWidth("<Click to open>");
-	    g.drawString("<Click to open>", (this.getWidth() - textSize) / 2, this.getHeight() / 2);
-	}
-	else {
-	    g.drawImage( this.image, 0, 0, null );
-	}
+        super.paint(g);
+
+        if (this.image == null) {
+            int textSize = this.getFontMetrics(this.getFont()).stringWidth("<Click to open>");
+            g.drawString("<Click to open>", (this.getWidth() - textSize) / 2, this.getHeight() / 2);
+        } else {
+            g.drawImage(this.image, 0, 0, null);
+        }
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -71,9 +66,7 @@ public class ImagePreviewPanel extends javax.swing.JPanel {
             .addGap(0, 129, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-    
-    
+
     // Declaração de variáveis - não modifique//GEN-BEGIN:variables
     // Fim da declaração de variáveis//GEN-END:variables
-    
 }
