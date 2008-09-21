@@ -1,4 +1,8 @@
 TO-DO:
--3D is not smooth. Has discrete plans
+-3D is not smooth. Has discrete plans (need oversampling)
 -test private static mathematical functions
 -javadocs in stereogram generation code (not in gui)
+-guide image
+-Help content
+-find more images (textures and maps)
+-start internationalization
