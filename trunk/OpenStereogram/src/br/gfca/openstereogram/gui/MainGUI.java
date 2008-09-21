@@ -263,7 +263,7 @@ public class MainGUI extends javax.swing.JFrame {
         mapAndPatternPanel.add(sizeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 80, -1));
 
         sizeSpinner.setEnabled(false);
-        sizeSpinner.setValue(120);
+        sizeSpinner.setValue(200);
         mapAndPatternPanel.add(sizeSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 80, -1));
 
         mapLabel.setText("Depth map:");
